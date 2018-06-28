@@ -4,11 +4,11 @@ namespace WLan {
 
 using namespace ns3;
 
-Domain::Domain(std::string ssid, int ch, int nnods) : ch_(ch){
+Domain::Domain(std::string ssid, int ch, int nnodes) : ch_(ch){
   ssid_ = Ssid(ssid);
   apNodes_.Create(1);
   staNodes_.Create(nnodes);
-  ConfigureDatalinkLayer();
+  ConfigureDataLinkLayer();
 }
 
 void Domain::ConfigureDataLinkLayer() {
