@@ -1,3 +1,6 @@
+#include "ns3.h"
+
+#include "ConstantParam.h"
 #include "Domain.h"
 
 namespace WLan {
@@ -50,19 +53,25 @@ void Domain::ConfigureDataLinkLayer() {
   );
   wifi.Install(phy, mac, apNodes_);
 
-  // Ptr<NetDevice> dev = apNodes_->Get(0)->GetDevice(0);
-  // Ptr<WifiNetDevice> wifiDev = DynamicCast<WifiNetDevice>(dev);
-  // Ptr<WifiMac> wifiMac = wifiDev->GetMac ();
-  // PointerValue ptr;
-  // Ptr<EdcaTxopN> edca;
-  // wifiMac->GetAttribute(STA_AC_STR, ptr);
-  // edca = ptr.Get<EdcaTxopN>();
-  // edca->SetMinCw(STA_CW_MIN);
-  // edca->SetMaxCw(STA_CW_MAX);
-  // edca->SetAifsn(STA_AIFS);
-  // edca->SetTxopLimit (MicroSeconds(0));
-  // edca->GetAttribute("Queue", edcaqueue);
-  // edcaqueue.Get<WifiMacQueue>()->SetMaxSize(QueueSize(QUEUE_SIZE));
+  Ptr<NetDevice> dev = apNodes_.Get(0)->GetDevice(0);
+  Ptr<WifiNetDevice> wifiDev = DynamicCast<WifiNetDevice>(dev);
+  Ptr<WifiMac> wifiMac = wifiDev->GetMac ();
+  Ptr<EdcaTxopN> edca;
+  PointerValue ptr;
+
+  wifiMac->GetAttribute(kEdcaApAc.str, ptr);
+  edca = ptr.Get<EdcaTxopN>();
+  edca->SetMinCw(kEdcaApCwMin);
+  edca->SetMaxCw(kEdcaApCwMax);
+  edca->SetAifsn(kEdcaApAifsn);
+  edca->SetTxopLimit(MilliSeconds(kEdcaApTxopMs));
+
+  wifiMac->GetAttribute(kEdcaStaAc.str, ptr);
+  edca = ptr.Get<EdcaTxopN>();
+  edca->SetMinCw(kEdcaStaCwMin);
+  edca->SetMaxCw(kEdcaStaCwMax);
+  edca->SetAifsn(kEdcaStaAifsn);
+  edca->SetTxopLimit(MilliSeconds(kEdcaStaTxopMs));
 }
 
 } // namespace WLan
