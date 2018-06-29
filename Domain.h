@@ -19,6 +19,6 @@ private:
   void ConfigureDataLinkLayer();
 };
 
-}
+} // namespace WLan
 
 #endif  // WLAN_DOMAIN_H__

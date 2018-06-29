@@ -65,4 +65,4 @@ void Domain::ConfigureDataLinkLayer() {
   // edcaqueue.Get<WifiMacQueue>()->SetMaxSize(QueueSize(QUEUE_SIZE));
 }
 
-}
+} // namespace WLan

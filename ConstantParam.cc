@@ -7,7 +7,7 @@ const WLan::EdcaAc kAcVi("VI_EdcaTxopN", 0xb8);
 const WLan::EdcaAc kAcBk("BK_EdcaTxopN", 0x28);
 const WLan::EdcaAc kAcBe("BE_EdcaTxopN", 0x70);
 
-}
+} // namespace
 
 namespace WLan {
 
@@ -23,4 +23,4 @@ const int    kEdcaApCwMax  = 1024;
 const int    kEdcaApAifs   = 4;
 const int    kEdcaApTxopMs = 0;
 
-}
+} // namespace WLan

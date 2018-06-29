@@ -6,8 +6,8 @@
 #include "Domain.h"
 #include "Simulation.h"
 
-using namespace WLan;
+using namespace ns3;
 
 int main() {
-  Simulation().Run();
+  WLan::Simulation().Run();
 }
