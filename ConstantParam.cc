@@ -23,4 +23,7 @@ const int    kEdcaApCwMax  = 1024;
 const int    kEdcaApAifsn  = 4;
 const int    kEdcaApTxopMs = 0;
 
+const std::string kAppDataRate = "54Mbps";
+const unsigned int kAppPacketSizeByte = 1472;
+
 } // namespace WLan

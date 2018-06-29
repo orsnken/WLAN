@@ -25,6 +25,9 @@ extern const int    kEdcaApCwMax;
 extern const int    kEdcaApAifsn;
 extern const int    kEdcaApTxopMs;
 
+extern const std::string kAppDataRate;
+extern const unsigned int kAppPacketSizeByte;
+
 } // namespace WLan
 
 #endif  // CONSTANT_PARAM_H__
