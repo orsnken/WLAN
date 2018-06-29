@@ -7,11 +7,18 @@ namespace WLan {
 
 using namespace ns3;
 
-Domain::Domain(std::string ssid, int ch, int nnodes) : ch_(ch){
+Domain::Domain(
+  std::string ssid,
+  int ch,
+  std::string naddr,
+  std::string smask,
+  int nnodes
+) : ch_(ch), naddr_(naddr), smask_(smask) {
   ssid_ = Ssid(ssid);
   apNodes_.Create(1);
   staNodes_.Create(nnodes);
   ConfigureDataLinkLayer();
+  ConfigureNetworkLayer();
 }
 
 void Domain::ConfigureDataLinkLayer() {
@@ -46,12 +53,12 @@ void Domain::ConfigureDataLinkLayer() {
     "QosSupported" , BooleanValue(true),
     "Ssid"         , SsidValue(ssid_)
   );
-  wifi.Install(phy, mac, staNodes_);
+  staDevs_ = wifi.Install(phy, mac, staNodes_);
   mac.SetType(
     "ns3::ApWifiMac",
     "Ssid", SsidValue(ssid_)
   );
-  wifi.Install(phy, mac, apNodes_);
+  apDevs_ = wifi.Install(phy, mac, apNodes_);
 
   Ptr<NetDevice> dev = apNodes_.Get(0)->GetDevice(0);
   Ptr<WifiNetDevice> wifiDev = DynamicCast<WifiNetDevice>(dev);
@@ -72,6 +79,17 @@ void Domain::ConfigureDataLinkLayer() {
   edca->SetMaxCw(kEdcaStaCwMax);
   edca->SetAifsn(kEdcaStaAifsn);
   edca->SetTxopLimit(MilliSeconds(kEdcaStaTxopMs));
+}
+
+void Domain::ConfigureNetworkLayer() {
+  InternetStackHelper stack;
+  stack.Install(apNodes_);
+  stack.Install(staNodes_);
+
+  Ipv4AddressHelper ipv4Network;
+  ipv4Network.SetBase(naddr_.c_str(), smask_.c_str());
+  ipv4Network.Assign(apDevs_);
+  ipv4Network.Assign(staDevs_);
 }
 
 } // namespace WLan
