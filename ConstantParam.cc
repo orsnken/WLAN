@@ -12,18 +12,18 @@ const WLan::EdcaAc kAcBe("BE_EdcaTxopN", 0x70);
 namespace WLan {
 
 const EdcaAc kEdcaStaAc     = kAcBk;
-const int    kEdcaStaCwMin  = 15;
+const int    kEdcaStaCwMin  = 30;
 const int    kEdcaStaCwMax  = 1024;
-const int    kEdcaStaAifsn  = 4;
+const int    kEdcaStaAifsn  = 1;
 const int    kEdcaStaTxopMs = 0;
 
 const EdcaAc kEdcaApAc     = kAcBe;
-const int    kEdcaApCwMin  = 15;
-const int    kEdcaApCwMax  = 1024;
+const int    kEdcaApCwMin  = 0;
+const int    kEdcaApCwMax  = 1;
 const int    kEdcaApAifsn  = 4;
 const int    kEdcaApTxopMs = 0;
 
-const std::string kAppDataRate = "54Mbps";
+const std::string kAppDataRate = "16Mbps";
 const unsigned int kAppPacketSizeByte = 1472;
 
 } // namespace WLan

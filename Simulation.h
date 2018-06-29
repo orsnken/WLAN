@@ -11,8 +11,13 @@ class Simulation {
 public:
   Simulation();
   void Run();
+  void TraceThroughput(
+    ns3::Ptr<ns3::Application> app,
+    uint32_t& oldTotalBytes,
+    int n
+  );
 private:
-  void SetTcpOnOffApplication(
+  ns3::ApplicationContainer SetTcpOnOffApplication(
     ns3::Ptr<ns3::Node> src,
     ns3::Ptr<ns3::Node> dest,
     WLan::EdcaAc srcAc,
@@ -20,6 +25,27 @@ private:
     int    portRemote,
     double timeStartSec,
     double timeStopSec
+  );
+
+  ns3::ApplicationContainer SetUdpOnOffApplication(
+    ns3::Ptr<ns3::Node> src,
+    ns3::Ptr<ns3::Node> dest,
+    WLan::EdcaAc srcAc,
+    WLan::EdcaAc destAc,
+    int    portRemote,
+    double timeStartSec,
+    double timeStopSec
+  );
+
+  ns3::ApplicationContainer SetOnOffApplication(
+    ns3::Ptr<ns3::Node> src,
+    ns3::Ptr<ns3::Node> dest,
+    WLan::EdcaAc srcAc,
+    WLan::EdcaAc destAc,
+    int    portRemote,
+    double timeStartSec,
+    double timeStopSec,
+    std::string transportProtocol
   );
 };
 

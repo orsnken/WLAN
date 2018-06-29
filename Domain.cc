@@ -50,9 +50,17 @@ void Domain::ConfigureDataLinkLayer() {
   channel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
   channel.AddPropagationLoss(
     "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(3.0),
+    "Exponent"         , DoubleValue(4.07),
     "ReferenceDistance", DoubleValue(1.0),
-    "ReferenceLoss"    , DoubleValue(76.645997)
+    "ReferenceLoss"    , DoubleValue(40.045997)
+  );
+  channel.AddPropagationLoss(
+    "ns3::NakagamiPropagationLossModel",
+    "Distance1", DoubleValue(80),
+    "Distance2", DoubleValue(200),
+    "m0", DoubleValue(1.0),
+    "m1", DoubleValue(1.0),
+    "m2", DoubleValue(1.0)
   );
   YansWifiPhyHelper phy = YansWifiPhyHelper::Default();
   phy.SetPcapDataLinkType(YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
