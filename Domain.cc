@@ -7,6 +7,53 @@ namespace WLan {
 
 using namespace ns3;
 
+// ----------------------------------------------------------------
+// static
+// ----------------------------------------------------------------
+ns3::WifiHelper Domain::sWifi;
+ns3::YansWifiPhyHelper Domain::sPhy;
+ns3::YansWifiChannelHelper Domain::sChannel;
+
+void Domain::Init() {
+  sWifi.SetStandard(WIFI_PHY_STANDARD_80211g);
+  sWifi.SetRemoteStationManager(
+    "ns3::ConstantRateWifiManager",
+    "DataMode"   , StringValue("ErpOfdmRate54Mbps"),
+    "ControlMode", StringValue("ErpOfdmRate54Mbps")
+  );
+
+  sChannel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
+  sChannel.AddPropagationLoss(
+    "ns3::LogDistancePropagationLossModel",
+    "Exponent"         , DoubleValue(4.07),
+    "ReferenceDistance", DoubleValue(1.0),
+    "ReferenceLoss"    , DoubleValue(40.045997)
+  );
+  sChannel.AddPropagationLoss(
+    "ns3::NakagamiPropagationLossModel",
+    "Distance1", DoubleValue(80),
+    "Distance2", DoubleValue(200),
+    "m0", DoubleValue(1.0),
+    "m1", DoubleValue(1.0),
+    "m2", DoubleValue(1.0)
+  );
+
+  sPhy = YansWifiPhyHelper::Default();
+  sPhy.SetPcapDataLinkType(YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
+  sPhy.SetChannel(sChannel.Create());
+  sPhy.Set("EnergyDetectionThreshold", DoubleValue(-96));
+  sPhy.Set("CcaMode1Threshold"       , DoubleValue(-99));
+  sPhy.Set("TxPowerEnd"              , DoubleValue(10.0206));
+  sPhy.Set("TxPowerStart"            , DoubleValue(10.0206));
+}
+
+// ----------------------------------------------------------------
+
+
+
+// ----------------------------------------------------------------
+// public
+// ----------------------------------------------------------------
 Domain::Domain(
   std::string ssid,
   int ch,
@@ -38,52 +85,29 @@ void Domain::ConfigureMobility(
   mobility.Install(staNodes_);
 }
 
+// ----------------------------------------------------------------
+
+
+
+// ----------------------------------------------------------------
+// private
+// ----------------------------------------------------------------
 void Domain::ConfigureDataLinkLayer() {
-  WifiHelper wifi;
-  wifi.SetStandard(WIFI_PHY_STANDARD_80211g);
-  wifi.SetRemoteStationManager(
-    "ns3::ConstantRateWifiManager",
-    "DataMode"   , StringValue("ErpOfdmRate54Mbps"),
-    "ControlMode", StringValue("ErpOfdmRate6Mbps")
-  );
-  YansWifiChannelHelper channel;
-  channel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
-  channel.AddPropagationLoss(
-    "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(4.07),
-    "ReferenceDistance", DoubleValue(1.0),
-    "ReferenceLoss"    , DoubleValue(40.045997)
-  );
-  channel.AddPropagationLoss(
-    "ns3::NakagamiPropagationLossModel",
-    "Distance1", DoubleValue(80),
-    "Distance2", DoubleValue(200),
-    "m0", DoubleValue(1.0),
-    "m1", DoubleValue(1.0),
-    "m2", DoubleValue(1.0)
-  );
-  YansWifiPhyHelper phy = YansWifiPhyHelper::Default();
-  phy.SetPcapDataLinkType(YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
-  phy.SetChannel(channel.Create());
-  phy.Set("EnergyDetectionThreshold", DoubleValue(-96));
-  phy.Set("CcaMode1Threshold"       , DoubleValue(-99));
-  phy.Set("TxPowerEnd"              , DoubleValue(10.0206));
-  phy.Set("TxPowerStart"            , DoubleValue(10.0206));
+  sPhy.Set("ChannelNumber", UintegerValue(ch_));
 
   WifiMacHelper mac;
-  phy.Set("ChannelNumber", UintegerValue(ch_));
   mac.SetType(
     "ns3::StaWifiMac",
     "ActiveProbing", BooleanValue(false),
     "QosSupported" , BooleanValue(true),
     "Ssid"         , SsidValue(ssid_)
   );
-  staDevs_ = wifi.Install(phy, mac, staNodes_);
+  staDevs_ = sWifi.Install(sPhy, mac, staNodes_);
   mac.SetType(
     "ns3::ApWifiMac",
     "Ssid", SsidValue(ssid_)
   );
-  apDevs_ = wifi.Install(phy, mac, apNodes_);
+  apDevs_ = sWifi.Install(sPhy, mac, apNodes_);
 
   Ptr<NetDevice> dev = apNodes_.Get(0)->GetDevice(0);
   Ptr<WifiNetDevice> wifiDev = DynamicCast<WifiNetDevice>(dev);

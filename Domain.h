@@ -10,6 +10,8 @@ namespace WLan {
 
 class Domain {
 public:
+  static void Init();
+
   Domain(
     std::string ssid,
     int ch,
@@ -21,9 +23,14 @@ public:
     ns3::Vector3D base,
     std::vector<ns3::Vector3D> relativePositionStas
   );
+
   ns3::Ptr<ns3::Node> GetApNode(int index) { return apNodes_.Get(index); }
   ns3::Ptr<ns3::Node> GetStaNode(int index) { return staNodes_.Get(index); }
 private:
+  static ns3::WifiHelper sWifi;
+  static ns3::YansWifiPhyHelper sPhy;
+  static ns3::YansWifiChannelHelper sChannel;
+
   int ch_;
   std::string naddr_;
   std::string smask_;
