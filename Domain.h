@@ -4,6 +4,7 @@
 #include "ns3.h"
 
 #include <string>
+#include <vector>
 
 namespace WLan {
 
@@ -15,6 +16,10 @@ public:
     std::string networkAddress,
     std::string subnetmast,
     int numOfNodes
+  );
+  void ConfigureMobility(
+    ns3::Vector3D base,
+    std::vector<ns3::Vector3D> relativePositionStas
   );
 private:
   int ch_;

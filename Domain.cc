@@ -21,6 +21,23 @@ Domain::Domain(
   ConfigureNetworkLayer();
 }
 
+void Domain::ConfigureMobility(
+  ns3::Vector3D base,
+  std::vector<ns3::Vector3D> rpstas
+) {
+  Ptr<ListPositionAllocator> positionAp = CreateObject<ListPositionAllocator>();
+  positionAp->Add(base);
+  Ptr<ListPositionAllocator> positionStas = CreateObject<ListPositionAllocator>();
+  for (Vector3D v: rpstas) {
+    positionStas->Add(v + base);
+  }
+  MobilityHelper mobility;
+  mobility.SetPositionAllocator(positionAp);
+  mobility.Install(apNodes_);
+  mobility.SetPositionAllocator(positionStas);
+  mobility.Install(staNodes_);
+}
+
 void Domain::ConfigureDataLinkLayer() {
   WifiHelper wifi;
   wifi.SetStandard(WIFI_PHY_STANDARD_80211g);
