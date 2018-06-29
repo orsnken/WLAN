@@ -14,13 +14,13 @@ namespace WLan {
 const EdcaAc kEdcaStaAc     = kAcBk;
 const int    kEdcaStaCwMin  = 15;
 const int    kEdcaStaCwMax  = 1024;
-const int    kEdcaStaAifs   = 4;
+const int    kEdcaStaAifsn  = 4;
 const int    kEdcaStaTxopMs = 0;
 
 const EdcaAc kEdcaApAc     = kAcBe;
 const int    kEdcaApCwMin  = 15;
 const int    kEdcaApCwMax  = 1024;
-const int    kEdcaApAifs   = 4;
+const int    kEdcaApAifsn  = 4;
 const int    kEdcaApTxopMs = 0;
 
 } // namespace WLan
