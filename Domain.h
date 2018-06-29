@@ -21,6 +21,8 @@ public:
     ns3::Vector3D base,
     std::vector<ns3::Vector3D> relativePositionStas
   );
+  ns3::Ptr<ns3::Node> GetApNode(int index) { return apNodes_.Get(index); }
+  ns3::Ptr<ns3::Node> GetStaNode(int index) { return staNodes_.Get(index); }
 private:
   int ch_;
   std::string naddr_;
