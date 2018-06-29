@@ -16,13 +16,13 @@ struct EdcaAc {
 extern const EdcaAc kEdcaStaAc;
 extern const int    kEdcaStaCwMin;
 extern const int    kEdcaStaCwMax;
-extern const int    kEdcaStaAifs;
+extern const int    kEdcaStaAifsn;
 extern const int    kEdcaStaTxopMs;
 
 extern const EdcaAc kEdcaApAc;
 extern const int    kEdcaApCwMin;
 extern const int    kEdcaApCwMax;
-extern const int    kEdcaApAifs;
+extern const int    kEdcaApAifsn;
 extern const int    kEdcaApTxopMs;
 
 } // namespace WLan
