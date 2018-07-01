@@ -13,6 +13,11 @@ struct EdcaAc {
   EdcaAc(std::string s, unsigned int n) : str(s), id(n) {}
 };
 
+
+extern const double kDistanceWLans;
+extern const double kDistanceApSta;
+extern const double kSimulationTimeSec;
+
 extern const EdcaAc kEdcaStaAc;
 extern const int    kEdcaStaCwMin;
 extern const int    kEdcaStaCwMax;

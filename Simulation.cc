@@ -28,8 +28,6 @@ ns3::ApplicationContainer Simulation::SetOnOffApplication(
   OnOffHelper ftp(transportProtocol, Address());
   ftp.SetAttribute("OnTime", StringValue("ns3::ConstantRandomVariable[Constant=1]"));
   ftp.SetAttribute("OffTime", StringValue("ns3::ConstantRandomVariable[Constant=0]"));
-  // ftp.SetAttribute("OnTime" , StringValue ("ns3::ExponentialRandomVariable[Mean=0.500]"));
-  // ftp.SetAttribute("OffTime", StringValue ("ns3::ExponentialRandomVariable[Mean=0.010]"));
   ftp.SetAttribute("DataRate", StringValue(kAppDataRate));
   ftp.SetAttribute("PacketSize", UintegerValue(kAppPacketSizeByte));
   ftp.SetAttribute("Remote", AddressValue(remoteSockAddr));

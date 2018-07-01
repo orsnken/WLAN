@@ -15,17 +15,17 @@ ns3::YansWifiPhyHelper Domain::sPhy;
 ns3::YansWifiChannelHelper Domain::sChannel;
 
 void Domain::Init() {
-  sWifi.SetStandard(WIFI_PHY_STANDARD_80211g);
   sWifi.SetRemoteStationManager(
     "ns3::ConstantRateWifiManager",
     "DataMode"   , StringValue("ErpOfdmRate54Mbps"),
     "ControlMode", StringValue("ErpOfdmRate54Mbps")
   );
+  sWifi.SetStandard (WIFI_PHY_STANDARD_80211g);
 
   sChannel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
   sChannel.AddPropagationLoss(
     "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(4.07),
+    "Exponent"         , DoubleValue(3.0),
     "ReferenceDistance", DoubleValue(1.0),
     "ReferenceLoss"    , DoubleValue(40.045997)
   );
@@ -41,10 +41,12 @@ void Domain::Init() {
   sPhy = YansWifiPhyHelper::Default();
   sPhy.SetPcapDataLinkType(YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
   sPhy.SetChannel(sChannel.Create());
+  /*
   sPhy.Set("EnergyDetectionThreshold", DoubleValue(-96));
   sPhy.Set("CcaMode1Threshold"       , DoubleValue(-99));
   sPhy.Set("TxPowerEnd"              , DoubleValue(10.0206));
   sPhy.Set("TxPowerStart"            , DoubleValue(10.0206));
+  */
 }
 
 // ----------------------------------------------------------------
@@ -95,19 +97,21 @@ void Domain::ConfigureMobility(
 void Domain::ConfigureDataLinkLayer() {
   sPhy.Set("ChannelNumber", UintegerValue(ch_));
 
-  WifiMacHelper mac;
-  mac.SetType(
+  WifiMacHelper macSta;
+  macSta.SetType(
     "ns3::StaWifiMac",
     "ActiveProbing", BooleanValue(false),
     "QosSupported" , BooleanValue(true),
     "Ssid"         , SsidValue(ssid_)
   );
-  staDevs_ = sWifi.Install(sPhy, mac, staNodes_);
-  mac.SetType(
+  staDevs_ = sWifi.Install(sPhy, macSta, staNodes_);
+  WifiMacHelper macAp;
+  macAp.SetType(
     "ns3::ApWifiMac",
-    "Ssid", SsidValue(ssid_)
+    "Ssid", SsidValue(ssid_),
+    "QosSupported" , BooleanValue(true)
   );
-  apDevs_ = sWifi.Install(sPhy, mac, apNodes_);
+  apDevs_ = sWifi.Install(sPhy, macAp, apNodes_);
 
   Ptr<NetDevice> dev = apNodes_.Get(0)->GetDevice(0);
   Ptr<WifiNetDevice> wifiDev = DynamicCast<WifiNetDevice>(dev);
