@@ -39,7 +39,7 @@ void WLan::Simulation::Run() {
   network2.ConfigureMobility(Vector3D(kDistanceWLans, 0, 0), sp2);
 
   SetUdpOnOffApplication(network1.GetStaNode(0), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1005, 0.1, 10.0);
-  SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, 0.1, 10.0);
+  // SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, 0.1, 10.0);
 
   // SetUdpOnOffApplication(network1.GetStaNode(1), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1007, 0.1, 10.0);
   // SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 1008, 0.1, 10.0);
@@ -49,7 +49,7 @@ void WLan::Simulation::Run() {
   // SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 1010, 0.1, 10.0);
 
   SetUdpOnOffApplication(network2.GetStaNode(0), network2. GetApNode(0), kEdcaStaAc, kEdcaApAc , 5005, 0.1, 10.0);
-  SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 5006, 0.1, 10.0);
+  // SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 5006, 0.1, 10.0);
 
   // SetUdpOnOffApplication(network2.GetStaNode(1), network2. GetApNode(0), kEdcaStaAc, kEdcaApAc , 5007, 0.1, 10.0);
   // SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 5008, 0.1, 10.0);

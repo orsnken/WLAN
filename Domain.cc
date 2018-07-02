@@ -25,7 +25,7 @@ void Domain::Init() {
   sChannel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
   sChannel.AddPropagationLoss(
     "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(3.0),
+    "Exponent"         , DoubleValue(4.7),
     "ReferenceDistance", DoubleValue(1.0),
     "ReferenceLoss"    , DoubleValue(40.045997)
   );
