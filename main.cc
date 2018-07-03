@@ -14,8 +14,8 @@ int main(int argc, char *argv[]) {
   cmd.Parse(argc, argv);
   std::random_device rnd;
   std::mt19937 mt(rnd());
-  RngSeedManager::SetSeed(mt());
-  RngSeedManager::SetRun(mt());
+  RngSeedManager::SetSeed(mt() + 1);
+  RngSeedManager::SetRun(mt() + 1);
   Config::SetDefault("ns3::WifiRemoteStationManager::RtsCtsThreshold", UintegerValue(100000));
   WLan::Domain::Init();
   WLan::Simulation().Run();
@@ -39,20 +39,20 @@ void WLan::Simulation::Run() {
   network2.ConfigureMobility(Vector3D(kDistanceWLans, 0, 0), sp2);
 
   SetUdpOnOffApplication(network1.GetStaNode(0), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1005, 0.1, 10.0);
-  // SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, 0.1, 10.0);
+  SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, 0.1, 10.0);
 
-  // SetUdpOnOffApplication(network1.GetStaNode(1), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1007, 0.1, 10.0);
-  // SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 1008, 0.1, 10.0);
+  SetUdpOnOffApplication(network1.GetStaNode(1), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1007, 0.1, 10.0);
+  SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 1008, 0.1, 10.0);
 
 
   // SetUdpOnOffApplication(network1.GetStaNode(2), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1009, 0.1, 10.0);
   // SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 1010, 0.1, 10.0);
 
   SetUdpOnOffApplication(network2.GetStaNode(0), network2. GetApNode(0), kEdcaStaAc, kEdcaApAc , 5005, 0.1, 10.0);
-  // SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 5006, 0.1, 10.0);
+  SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 5006, 0.1, 10.0);
 
-  // SetUdpOnOffApplication(network2.GetStaNode(1), network2. GetApNode(0), kEdcaStaAc, kEdcaApAc , 5007, 0.1, 10.0);
-  // SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 5008, 0.1, 10.0);
+  SetUdpOnOffApplication(network2.GetStaNode(1), network2. GetApNode(0), kEdcaStaAc, kEdcaApAc , 5007, 0.1, 10.0);
+  SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 5008, 0.1, 10.0);
 
   // SetUdpOnOffApplication(network2.GetStaNode(2), network2. GetApNode(0), kEdcaStaAc, kEdcaApAc , 5009, 0.1, 10.0);
   // SetUdpOnOffApplication(network2. GetApNode(0), network2.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 5010, 0.1, 10.0);
