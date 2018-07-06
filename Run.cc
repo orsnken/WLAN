@@ -37,7 +37,7 @@ void output(FlowMonitorHelper& flowMonitor, Ptr<FlowMonitor> fm, const std::stri
     NS_LOG_UNCOND("Flow ID: " << iter->first << " src addr " << t.sourceAddress << " dest addr " << t.destinationAddress);
     NS_LOG_UNCOND("" << throughputKbps << ",");
     avr +=  throughputKbps;
-    ofs << throughputKbps << std::endl;
+    ofs << throughputKbps << " ";
   }
   NS_LOG_UNCOND("AVR.: " << avr);
   ofs.close();
