@@ -429,14 +429,14 @@ EdcaParameterSet::SerializeInformationField (Buffer::Iterator start) const
       start.WriteU32 (m_acBK);
       start.WriteU32 (m_acVI);
       start.WriteU32 (m_acVO);
-      start.WriteU32 (m_acBECwMin);
-      start.WriteU32 (m_acBECwMax);
-      start.WriteU32 (m_acBKCwMin);
-      start.WriteU32 (m_acBKCwMax);
-      start.WriteU32 (m_acVICwMin);
-      start.WriteU32 (m_acVICwMax);
-      start.WriteU32 (m_acVOCwMin);
-      start.WriteU32 (m_acVOCwMax);
+      start.WriteU32 (m_acBECwMin); // USER DEFINE
+      start.WriteU32 (m_acBECwMax); // USER DEFINE
+      start.WriteU32 (m_acBKCwMin); // USER DEFINE
+      start.WriteU32 (m_acBKCwMax); // USER DEFINE
+      start.WriteU32 (m_acVICwMin); // USER DEFINE
+      start.WriteU32 (m_acVICwMax); // USER DEFINE
+      start.WriteU32 (m_acVOCwMin); // USER DEFINE
+      start.WriteU32 (m_acVOCwMax); // USER DEFINE
 
     }
 }
@@ -451,14 +451,14 @@ EdcaParameterSet::DeserializeInformationField (Buffer::Iterator start, uint8_t l
   m_acBK = i.ReadU32 ();
   m_acVI = i.ReadU32 ();
   m_acVO = i.ReadU32 ();
-  m_acBECwMin = i.ReadU32 ();
-  m_acBECwMax = i.ReadU32 ();
-  m_acBKCwMin = i.ReadU32 ();
-  m_acBKCwMax = i.ReadU32 ();
-  m_acVICwMin = i.ReadU32 ();
-  m_acVICwMax = i.ReadU32 ();
-  m_acVOCwMin = i.ReadU32 ();
-  m_acVOCwMax = i.ReadU32 ();
+  m_acBECwMin = i.ReadU32 (); // USER DEFINE
+  m_acBECwMax = i.ReadU32 (); // USER DEFINE
+  m_acBKCwMin = i.ReadU32 (); // USER DEFINE
+  m_acBKCwMax = i.ReadU32 (); // USER DEFINE
+  m_acVICwMin = i.ReadU32 (); // USER DEFINE
+  m_acVICwMax = i.ReadU32 (); // USER DEFINE
+  m_acVOCwMin = i.ReadU32 (); // USER DEFINE
+  m_acVOCwMax = i.ReadU32 (); // USER DEFINE
 
   return length;
 }
