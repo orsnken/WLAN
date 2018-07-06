@@ -10,6 +10,7 @@
 #include "ConstantParam.h"
 #include "Domain.h"
 #include "Simulation.h"
+#include "SimulationSettings.h"
 
 using namespace ns3;
 
@@ -49,7 +50,7 @@ std::string filename() {
   filename += kFilenamePrefix;
   filename += "D";
   std::ostringstream sout;
-  sout << std::setfill('0') << std::setw(3) << static_cast<int>(kDistanceWLans);
+  sout << std::setfill('0') << std::setw(3) << static_cast<int>(Global::distanceWLans);
   filename += sout.str();
   filename += "_ACMIN";
   filename += std::to_string(kEdcaApCwMin);
@@ -84,7 +85,7 @@ void WLan::Simulation::Run() {
   sp2.push_back(Vector3D( 0.0, 0.0, kDistanceApSta));
   sp2.push_back(Vector3D(-kDistanceApSta, 0.0, 0.0));
   sp2.push_back(Vector3D( 0.0, 0.0,-kDistanceApSta));
-  network2.ConfigureMobility(Vector3D(kDistanceWLans, 0, 0), sp2);
+  network2.ConfigureMobility(Vector3D(Global::distanceWLans, 0, 0), sp2);
 
   SetUdpOnOffApplication(network1.GetStaNode(0), network1. GetApNode(0), kEdcaStaAc, kEdcaApAc , 1005, kApplicationBeginSec, kApplicationEndSec);
   SetUdpOnOffApplication(network1. GetApNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, kApplicationBeginSec, kApplicationEndSec);
