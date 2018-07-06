@@ -1,14 +1,73 @@
 #include "ns3.h"
 
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <random>
+#include <sstream>
+#include <string>
 
 #include "ConstantParam.h"
 #include "Domain.h"
 #include "Simulation.h"
 
 using namespace ns3;
+
+namespace {
+
+const std::string kFilenameDir     = "scratch/WLAN/dat";
+const std::string kFilenamePrefix  = "SUG_";
+const std::string kFilenamePostfix = ".dat";
+
+} // namesapce 
+
+namespace {
+
+void output(FlowMonitorHelper& flowMonitor, Ptr<FlowMonitor> fm, const std::string& filename) {
+  std::ofstream ofs(filename);
+  fm->CheckForLostPackets ();
+  Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier>(flowMonitor.GetClassifier());
+  std::map<FlowId, FlowMonitor::FlowStats> stats = fm->GetFlowStats();
+  std::cout << "--------------------------------------" << std::endl;
+  double avr = 0.0;
+  for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator iter = stats.begin(); iter != stats.end(); iter++) {
+    Ipv4FlowClassifier::FiveTuple t = classifier->FindFlow (iter->first);
+    double throughputKbps = iter->second.rxBytes * 8.0 / (iter->second.timeLastRxPacket.GetSeconds() - iter->second.timeFirstTxPacket.GetSeconds()) / 1024;
+    NS_LOG_UNCOND("Flow ID: " << iter->first << " src addr " << t.sourceAddress << " dest addr " << t.destinationAddress);
+    NS_LOG_UNCOND("" << throughputKbps << ",");
+    avr +=  throughputKbps;
+    ofs << throughputKbps << std::endl;
+  }
+  NS_LOG_UNCOND("AVR.: " << avr);
+  ofs.close();
+}
+
+std::string filename() {
+  using namespace WLan;
+  std::string filename = kFilenameDir;
+  filename += "/";
+  filename += kFilenamePrefix;
+  filename += "D";
+  std::ostringstream sout;
+  sout << std::setfill('0') << std::setw(3) << static_cast<int>(kDistanceWLans);
+  filename += sout.str();
+  filename += "_ACMIN";
+  filename += std::to_string(kEdcaApCwMin);
+  filename += "_ACMAX";
+  filename += std::to_string(kEdcaApCwMax);
+  filename += "_AAIFS";
+  filename += std::to_string(kEdcaApAifsn);
+  filename += "_SCMIN";
+  filename += std::to_string(kEdcaStaCwMin);
+  filename += "_SCMAX";
+  filename += std::to_string(kEdcaStaCwMax);
+  filename += "_SAIFS";
+  filename += std::to_string(kEdcaStaAifsn);
+  filename += kFilenamePostfix;
+  return filename;
+}
+
+} // namespace
 
 void WLan::Simulation::Run() {
   std::cout << "Run Now!!" << std::endl;
@@ -52,16 +111,7 @@ void WLan::Simulation::Run() {
   Simulator::Run();
   Simulator::Destroy();
 
-  fm->CheckForLostPackets ();
-  Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier>(flowMonitor.GetClassifier());
-  std::map<FlowId, FlowMonitor::FlowStats> stats = fm->GetFlowStats();
-  std::cout << "--------------------------------------" << std::endl;
-  double avr = 0.0;
-  for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator iter = stats.begin(); iter != stats.end(); iter++) {
-    Ipv4FlowClassifier::FiveTuple t = classifier->FindFlow (iter->first);
-    NS_LOG_UNCOND("Flow ID: " << iter->first << " src addr " << t.sourceAddress << " dest addr " << t.destinationAddress);
-    NS_LOG_UNCOND("" << iter->second.rxBytes * 8.0 / (iter->second.timeLastRxPacket.GetSeconds() - iter->second.timeFirstTxPacket.GetSeconds()) / 1024 << ",");
-    avr +=  iter->second.rxBytes * 8.0 / (iter->second.timeLastRxPacket.GetSeconds() - iter->second.timeFirstTxPacket.GetSeconds()) / 1024;
-  }
-  std::cout << avr << std::endl;
+  output(flowMonitor, fm, filename());
+
 }
+
