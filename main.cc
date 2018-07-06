@@ -7,11 +7,13 @@
 #include "ConstantParam.h"
 #include "Domain.h"
 #include "Simulation.h"
+#include "SimulationSettings.h"
 
 using namespace ns3;
 
 int main(int argc, char *argv[]) {
   CommandLine cmd;
+  cmd.AddValue ("distanceWLANs", "The distance in meters between WLANs (Default:5.0)", WLan::Global::distanceWLans);
   cmd.Parse(argc, argv);
   std::random_device rnd;
   std::mt19937 mt(rnd());
