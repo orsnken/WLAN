@@ -13,20 +13,20 @@ namespace WLan {
 
 const double kDistanceWLans = 5.0;
 const double kDistanceApSta = 0.3;
-const double kSimulationTimeSec = 10.0;
+const double kSimulationTimeSec = 3.0;
 const double kApplicationBeginSec = 0.1;
 const double kApplicationEndSec   = kSimulationTimeSec - 0.1;
 
 const EdcaAc kEdcaStaAc     = kAcBk;
-const int    kEdcaStaCwMin  = 10;
-const int    kEdcaStaCwMax  = 1023;
+const int    kEdcaStaCwMin  = 7;
+const int    kEdcaStaCwMax  = 31;
 const int    kEdcaStaAifsn  = 2;
 const int    kEdcaStaTxopMs = 0;
 
 const EdcaAc kEdcaApAc     = kAcVo;
-const int    kEdcaApCwMin  = 0;
-const int    kEdcaApCwMax  = 1;
-const int    kEdcaApAifsn  = 5;
+const int    kEdcaApCwMin  = 7;
+const int    kEdcaApCwMax  = 31;
+const int    kEdcaApAifsn  = 2;
 const int    kEdcaApTxopMs = 0;
 
 const std::string kAppDataRate = "54Mbps";

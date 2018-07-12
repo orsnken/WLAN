@@ -25,7 +25,7 @@ void Domain::Init() {
   sChannel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
   sChannel.AddPropagationLoss(
     "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(4.07),
+    "Exponent"         , DoubleValue(3.71),
     "ReferenceDistance", DoubleValue(1.0),
     "ReferenceLoss"    , DoubleValue(40.045997)
   );
@@ -41,8 +41,8 @@ void Domain::Init() {
   sPhy = YansWifiPhyHelper::Default();
   sPhy.SetPcapDataLinkType(YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
   sPhy.SetChannel(sChannel.Create());
-  sPhy.Set("EnergyDetectionThreshold", DoubleValue(-96));
-  sPhy.Set("CcaMode1Threshold"       , DoubleValue(-99));
+  sPhy.Set("EnergyDetectionThreshold", DoubleValue(-82));
+  sPhy.Set("CcaMode1Threshold"       , DoubleValue(-82));
   sPhy.Set("TxPowerEnd"              , DoubleValue(10.0206));
   sPhy.Set("TxPowerStart"            , DoubleValue(10.0206));
 }

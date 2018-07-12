@@ -53,7 +53,24 @@ ns3::ApplicationContainer Simulation::SetTcpOnOffApplication(
   double timeStartSec,
   double timeStopSec
 ) {
-  return SetOnOffApplication(src, dest, srcAc, destAc, portRemote, timeStartSec, timeStopSec, "ns3::TcpSocketFactory");
+  Ipv4InterfaceAddress destAddr = dest->GetObject<Ipv4>()->GetAddress(1, 0);
+  InetSocketAddress remoteSockAddr(destAddr.GetLocal(), portRemote);
+  remoteSockAddr.SetTos(srcAc.id);
+
+  BulkSendHelper ftp("ns3::TcpSocketFactory", Address());
+  ftp.SetAttribute("Remote", AddressValue(remoteSockAddr));
+  ApplicationContainer app = ftp.Install(src);
+
+  InetSocketAddress remoteSockAddrT(destAddr.GetLocal(), portRemote);
+  remoteSockAddrT.SetTos(destAc.id);
+  PacketSinkHelper sinkHelper("ns3::TcpSocketFactory", Address(remoteSockAddrT));
+  app.Add(sinkHelper.Install(dest));
+
+  app.Start(Seconds(timeStartSec));
+  app.Stop(Seconds(timeStopSec));
+
+  return app;
+  // return SetOnOffApplication(src, dest, srcAc, destAc, portRemote, timeStartSec, timeStopSec, "ns3::TcpSocketFactory");
 }
 
 ns3::ApplicationContainer Simulation::SetUdpOnOffApplication(
