@@ -48,6 +48,8 @@ std::string filename() {
   std::string filename = kFilenameDir;
   filename += "/";
   filename += kFilenamePrefix;
+  filename += Global::trafficType;
+  filename += "_";
   filename += "D";
   std::ostringstream sout;
   sout << std::setfill('0') << std::setw(3) << static_cast<int>(Global::distanceWLans);
@@ -71,7 +73,7 @@ std::string filename() {
 } // namespace
 
 void WLan::Simulation::Run() {
-  std::cout << "Run Now!![" << Global::trafficType << "]" << std::endl;
+  std::cout << "Run Now!![" << Global::trafficType << ", " << Global::distanceWLans << "m]" << std::endl;
   std::cout << "AP : (CWmin, CWmax, AIFSN) > (" << Global::apCwMin << ", " << Global::apCwMax << ", " << Global::apAifsn << ")" << std::endl;
   std::cout << "STA: (CWmin, CWmax, AIFSN) > (" << Global::staCwMin << ", " << Global::staCwMax << ", " << Global::staAifsn << ")" << std::endl;
 

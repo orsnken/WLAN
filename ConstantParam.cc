@@ -13,7 +13,7 @@ namespace WLan {
 
 const double kDistanceWLans = 5.0;
 const double kDistanceApSta = 0.3;
-const double kSimulationTimeSec = 3.0;
+const double kSimulationTimeSec = 10.0;
 const double kApplicationBeginSec = 0.1;
 const double kApplicationEndSec   = kSimulationTimeSec - 0.1;
 
