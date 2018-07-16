@@ -2,6 +2,7 @@
 
 #include "ConstantParam.h"
 #include "Domain.h"
+#include "SimulationSettings.h"
 
 namespace WLan {
 
@@ -25,7 +26,7 @@ void Domain::Init() {
   sChannel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
   sChannel.AddPropagationLoss(
     "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(3.71),
+    "Exponent"         , DoubleValue(3), // 3.71
     "ReferenceDistance", DoubleValue(1.0),
     "ReferenceLoss"    , DoubleValue(40.045997)
   );
@@ -43,8 +44,8 @@ void Domain::Init() {
   sPhy.SetChannel(sChannel.Create());
   sPhy.Set("EnergyDetectionThreshold", DoubleValue(-82));
   sPhy.Set("CcaMode1Threshold"       , DoubleValue(-82));
-  sPhy.Set("TxPowerEnd"              , DoubleValue(10.0206));
-  sPhy.Set("TxPowerStart"            , DoubleValue(10.0206));
+  sPhy.Set("TxPowerEnd"              , DoubleValue(10));
+  sPhy.Set("TxPowerStart"            , DoubleValue(10));
 }
 
 // ----------------------------------------------------------------
@@ -119,16 +120,16 @@ void Domain::ConfigureDataLinkLayer() {
 
   wifiMac->GetAttribute(kEdcaApAc.str, ptr);
   edca = ptr.Get<EdcaTxopN>();
-  edca->SetMinCw(kEdcaApCwMin);
-  edca->SetMaxCw(kEdcaApCwMax);
-  edca->SetAifsn(kEdcaApAifsn);
+  edca->SetMinCw(Global::apCwMin);
+  edca->SetMaxCw(Global::apCwMax);
+  edca->SetAifsn(Global::apAifsn);
   edca->SetTxopLimit(MilliSeconds(kEdcaApTxopMs));
 
   wifiMac->GetAttribute(kEdcaStaAc.str, ptr);
   edca = ptr.Get<EdcaTxopN>();
-  edca->SetMinCw(kEdcaStaCwMin);
-  edca->SetMaxCw(kEdcaStaCwMax);
-  edca->SetAifsn(kEdcaStaAifsn);
+  edca->SetMinCw(Global::staCwMin);
+  edca->SetMaxCw(Global::staCwMax);
+  edca->SetAifsn(Global::staAifsn);
   edca->SetTxopLimit(MilliSeconds(kEdcaStaTxopMs));
 }
 
