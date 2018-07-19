@@ -42,7 +42,7 @@ void Domain::Init() {
   sPhy = YansWifiPhyHelper::Default();
   sPhy.SetPcapDataLinkType(YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
   sPhy.SetChannel(sChannel.Create());
-  sPhy.Set("EnergyDetectionThreshold", DoubleValue(-82));
+  sPhy.Set("EnergyDetectionThreshold", DoubleValue(-79));
   sPhy.Set("CcaMode1Threshold"       , DoubleValue(-82));
   sPhy.Set("TxPowerEnd"              , DoubleValue(10));
   sPhy.Set("TxPowerStart"            , DoubleValue(10));
