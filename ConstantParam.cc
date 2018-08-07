@@ -11,21 +11,21 @@ const WLan::EdcaAc kAcBe("BE_EdcaTxopN", 0x70);
 
 namespace WLan {
 
-const double kDistanceWLans = 5.0;
+const double kDistanceWLans = 20.0;
 const double kDistanceApSta = 0.3;
-const double kSimulationTimeSec = 20.0;
+const double kSimulationTimeSec = 10.0;
 const double kApplicationBeginSec = 0.1;
 const double kApplicationEndSec   = kSimulationTimeSec - 0.1;
 
 const EdcaAc kEdcaStaAc     = kAcBk;
-const int    kEdcaStaCwMin  = 7;
-const int    kEdcaStaCwMax  = 31;
+const int    kEdcaStaCwMin  = 63;
+const int    kEdcaStaCwMax  = 1023;
 const int    kEdcaStaAifsn  = 2;
 const int    kEdcaStaTxopMs = 0;
 
 const EdcaAc kEdcaApAc     = kAcVo;
-const int    kEdcaApCwMin  = 7;
-const int    kEdcaApCwMax  = 31;
+const int    kEdcaApCwMin  = 63;
+const int    kEdcaApCwMax  = 1023;
 const int    kEdcaApAifsn  = 2;
 const int    kEdcaApTxopMs = 0;
 

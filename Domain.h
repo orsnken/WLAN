@@ -16,7 +16,9 @@ public:
     std::string ssid,
     int ch,
     std::string networkAddress,
-    std::string subnetmast,
+    std::string subnetmask,
+    std::string networkAddressApServer,
+    std::string subnetmaskApServer,
     int numOfNodes
   );
   void ConfigureMobility(
@@ -26,6 +28,7 @@ public:
 
   ns3::Ptr<ns3::Node> GetApNode(int index) { return apNodes_.Get(index); }
   ns3::Ptr<ns3::Node> GetStaNode(int index) { return staNodes_.Get(index); }
+  ns3::Ptr<ns3::Node> GetServerNode(int index) { return serverNodes_.Get(index); }
 private:
   static ns3::WifiHelper sWifi;
   static ns3::YansWifiPhyHelper sPhy;
@@ -34,11 +37,15 @@ private:
   int ch_;
   std::string naddr_;
   std::string smask_;
+  std::string naddrApServer_;
+  std::string smaskApServer_;
   ns3::Ssid ssid_;
   ns3::NodeContainer apNodes_;
   ns3::NodeContainer staNodes_;
+  ns3::NodeContainer serverNodes_;
   ns3::NetDeviceContainer apDevs_;
   ns3::NetDeviceContainer staDevs_;
+  ns3::NetDeviceContainer apServerDevs_;
 
   void ConfigureDataLinkLayer();
   void ConfigureNetworkLayer();

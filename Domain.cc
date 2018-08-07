@@ -26,7 +26,7 @@ void Domain::Init() {
   sChannel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
   sChannel.AddPropagationLoss(
     "ns3::LogDistancePropagationLossModel",
-    "Exponent"         , DoubleValue(3.5), // 3.71
+    "Exponent"         , DoubleValue(3.0), // 3.71
     "ReferenceDistance", DoubleValue(1.0),
     "ReferenceLoss"    , DoubleValue(40.045997)
   );
@@ -60,11 +60,15 @@ Domain::Domain(
   int ch,
   std::string naddr,
   std::string smask,
+  std::string naddrApServer,
+  std::string smaskApServer,
   int nnodes
-) : ch_(ch), naddr_(naddr), smask_(smask) {
+) : ch_(ch), naddr_(naddr), smask_(smask),
+    naddrApServer_(naddrApServer), smaskApServer_(smaskApServer) {
   ssid_ = Ssid(ssid);
   apNodes_.Create(1);
   staNodes_.Create(nnodes);
+  serverNodes_.Create(nnodes);
   ConfigureDataLinkLayer();
   ConfigureNetworkLayer();
 }
@@ -131,17 +135,46 @@ void Domain::ConfigureDataLinkLayer() {
   edca->SetMaxCw(Global::staCwMax);
   edca->SetAifsn(Global::staAifsn);
   edca->SetTxopLimit(MilliSeconds(kEdcaStaTxopMs));
+
+  PointToPointHelper p2p;
+  p2p.SetDeviceAttribute("DataRate", StringValue("54Mbps"));
+  p2p.SetChannelAttribute("Delay", StringValue("5ms"));
+  apServerDevs_ = p2p.Install(apNodes_.Get(0), serverNodes_.Get(0));
+  apServerDevs_.Add(p2p.Install(apNodes_.Get(0), serverNodes_.Get(1)));
+  apServerDevs_.Add(p2p.Install(apNodes_.Get(0), serverNodes_.Get(2)));
 }
 
 void Domain::ConfigureNetworkLayer() {
   InternetStackHelper stack;
   stack.Install(apNodes_);
   stack.Install(staNodes_);
+  stack.Install(serverNodes_);
 
   Ipv4AddressHelper ipv4Network;
   ipv4Network.SetBase(naddr_.c_str(), smask_.c_str());
   ipv4Network.Assign(apDevs_);
   ipv4Network.Assign(staDevs_);
+
+  ipv4Network.SetBase(naddrApServer_.c_str(), smaskApServer_.c_str());
+  Ipv4InterfaceContainer apServer = ipv4Network.Assign(apServerDevs_);
+
+  Ipv4StaticRoutingHelper staticRouting;
+  Ptr<Ipv4StaticRouting> sr = staticRouting.GetStaticRouting(apNodes_.Get(0)->GetObject<Ipv4>());
+  sr->AddHostRouteTo(apServer.GetAddress(1), 2);
+  sr->AddHostRouteTo(apServer.GetAddress(3), 3);
+  sr->AddHostRouteTo(apServer.GetAddress(5), 4);
+  // sr->AddNetworkRouteTo(Ipv4Address(naddrApServer_.c_str()), Ipv4Mask(smaskApServer_.c_str()), 2);
+
+  for (int i = 0; i < static_cast<int>(serverNodes_.GetN()); i++) {
+    sr = staticRouting.GetStaticRouting(serverNodes_.Get(i)->GetObject<Ipv4>());
+    sr->AddNetworkRouteTo(Ipv4Address(naddr_.c_str()), Ipv4Mask(smask_.c_str()), apServer.GetAddress(0), 1);
+  }
+
+  for (int i = 0; i < static_cast<int>(staNodes_.GetN()); i++) {
+    Ipv4Address gateway(apNodes_.Get(0)->GetObject<Ipv4>()->GetAddress(1, 0).GetLocal());
+    Ptr<Ipv4StaticRouting> wlan = staticRouting.GetStaticRouting(staNodes_.Get(i)->GetObject<Ipv4>());
+    wlan->SetDefaultRoute(gateway, 1);
+  }
 }
 
 } // namespace WLan
