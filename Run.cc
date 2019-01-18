@@ -96,8 +96,8 @@ void WLan::Simulation::Run() {
     SetUdpOnOffApplication(network1.GetStaNode(0), network1. GetServerNode(0), kEdcaStaAc, kEdcaApAc , 1005, kApplicationBeginSec, kApplicationEndSec);
     SetUdpOnOffApplication(network1.GetServerNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, kApplicationBeginSec, kApplicationEndSec);
 
-    SetUdpOnOffApplication(network1.GetStaNode(1), network1.GetServerNode(1), kEdcaStaAc, kEdcaApAc , 1007, kApplicationBeginSec, kApplicationEndSec);
-    SetUdpOnOffApplication(network1.GetServerNode(1), network1.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 1008, kApplicationBeginSec, kApplicationEndSec);
+    // SetUdpOnOffApplication(network1.GetStaNode(1), network1.GetServerNode(1), kEdcaStaAc, kEdcaApAc , 1007, kApplicationBeginSec, kApplicationEndSec);
+    // SetUdpOnOffApplication(network1.GetServerNode(1), network1.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 1008, kApplicationBeginSec, kApplicationEndSec);
 
     // SetUdpOnOffApplication(network1.GetStaNode(2), network1.GetServerNode(2), kEdcaStaAc, kEdcaApAc , 1009, kApplicationBeginSec, kApplicationEndSec);
     // SetUdpOnOffApplication(network1.GetServerNode(2), network1.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 1010, kApplicationBeginSec, kApplicationEndSec);
@@ -105,11 +105,11 @@ void WLan::Simulation::Run() {
     SetUdpOnOffApplication(network2.GetStaNode(0), network2.GetServerNode(0), kEdcaStaAc, kEdcaApAc , 5005, kApplicationBeginSec, kApplicationEndSec);
     SetUdpOnOffApplication(network2.GetServerNode(0), network2.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 5006, kApplicationBeginSec, kApplicationEndSec);
 
-    SetUdpOnOffApplication(network2.GetStaNode(1), network2.GetServerNode(1), kEdcaStaAc, kEdcaApAc , 5007, kApplicationBeginSec, kApplicationEndSec);
-    SetUdpOnOffApplication(network2.GetServerNode(1), network2.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 5008, kApplicationBeginSec, kApplicationEndSec);
+    // SetUdpOnOffApplication(network2.GetStaNode(1), network2.GetServerNode(1), kEdcaStaAc, kEdcaApAc , 5007, kApplicationBeginSec, kApplicationEndSec);
+    // SetUdpOnOffApplication(network2.GetServerNode(1), network2.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 5008, kApplicationBeginSec, kApplicationEndSec);
 
-    // SetUdpOnOffApplication(network2.GetServerNode(2), network2.GetApNode(2), kEdcaStaAc, kEdcaApAc , 5009, kApplicationBeginSec, kApplicationEndSec;
-    // SetUdpOnOffApplication(network2.GetApNode(2), network2.GetServerNode(2), kEdcaApAc , kEdcaStaAc, 5010, kApplicationBeginSec, kApplicationEndSec);
+    // SetUdpOnOffApplication(network2.GetStaNode(2), network2.GetServerNode(2), kEdcaStaAc, kEdcaApAc , 5009, kApplicationBeginSec, kApplicationEndSec);
+    // SetUdpOnOffApplication(network2.GetServerNode(2), network2.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 5010, kApplicationBeginSec, kApplicationEndSec);
   } else if (Global::trafficType == "TCP") {
     SetTcpOnOffApplication(network1.GetStaNode(0), network1.GetServerNode(0), kEdcaStaAc, kEdcaApAc , 1005, kApplicationBeginSec, kApplicationEndSec);
     SetTcpOnOffApplication(network1.GetServerNode(0), network1.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 1006, kApplicationBeginSec, kApplicationEndSec);
@@ -117,8 +117,8 @@ void WLan::Simulation::Run() {
     SetTcpOnOffApplication(network1.GetStaNode(1), network1.GetServerNode(1), kEdcaStaAc, kEdcaApAc , 1007, kApplicationBeginSec, kApplicationEndSec);
     SetTcpOnOffApplication(network1.GetServerNode(1), network1.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 1008, kApplicationBeginSec, kApplicationEndSec);
 
-    // SetTcpOnOffApplication(network1.GetStaNode(2), network1.GetServerNode(2), kEdcaStaAc, kEdcaApAc , 1009, kApplicationBeginSec, kApplicationEndSec);
-    // SetTcpOnOffApplication(network1.GetServerNode(2), network1.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 1010, kApplicationBeginSec, kApplicationEndSec);
+    SetTcpOnOffApplication(network1.GetStaNode(2), network1.GetServerNode(2), kEdcaStaAc, kEdcaApAc , 1009, kApplicationBeginSec, kApplicationEndSec);
+    SetTcpOnOffApplication(network1.GetServerNode(2), network1.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 1010, kApplicationBeginSec, kApplicationEndSec);
 
     SetTcpOnOffApplication(network2.GetStaNode(0), network2.GetServerNode(0), kEdcaStaAc, kEdcaApAc , 5005, kApplicationBeginSec, kApplicationEndSec);
     SetTcpOnOffApplication(network2.GetServerNode(0), network2.GetStaNode(0), kEdcaApAc , kEdcaStaAc, 5006, kApplicationBeginSec, kApplicationEndSec);
@@ -126,8 +126,8 @@ void WLan::Simulation::Run() {
     SetTcpOnOffApplication(network2.GetStaNode(1), network2.GetServerNode(1), kEdcaStaAc, kEdcaApAc , 5007, kApplicationBeginSec, kApplicationEndSec);
     SetTcpOnOffApplication(network2.GetServerNode(1), network2.GetStaNode(1), kEdcaApAc , kEdcaStaAc, 5008, kApplicationBeginSec, kApplicationEndSec);
 
-    // SetTcpOnOffApplication(network2.GetStaNode(2), network2.GetServerNode(2), kEdcaStaAc, kEdcaApAc , 5009, kApplicationBeginSec, kApplicationEndSec);
-    // SetTcpOnOffApplication(network2.GetServerNode(2), network2.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 5010, kApplicationBeginSec, kApplicationEndSec);
+    SetTcpOnOffApplication(network2.GetStaNode(2), network2.GetServerNode(2), kEdcaStaAc, kEdcaApAc , 5009, kApplicationBeginSec, kApplicationEndSec);
+    SetTcpOnOffApplication(network2.GetServerNode(2), network2.GetStaNode(2), kEdcaApAc , kEdcaStaAc, 5010, kApplicationBeginSec, kApplicationEndSec);
   } else {
     std::cout << "Unknown traffic type [" << Global::trafficType << "]" << std::endl;
     return;
@@ -143,4 +143,3 @@ void WLan::Simulation::Run() {
   output(flowMonitor, fm, filename());
 
 }
-

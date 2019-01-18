@@ -27,6 +27,9 @@ int main(int argc, char *argv[]) {
   RngSeedManager::SetSeed(mt() + 1);
   RngSeedManager::SetRun(mt() + 1);
   Config::SetDefault("ns3::WifiRemoteStationManager::RtsCtsThreshold", UintegerValue(100000));
+  Config::SetDefault("ns3::TcpSocket::RcvBufSize", UintegerValue(1 << 21));
+  Config::SetDefault("ns3::TcpSocket::SndBufSize", UintegerValue(1 << 21));
+  Config::SetDefault("ns3::TcpSocket::SegmentSize", UintegerValue(1460));
   WLan::Domain::Init();
   WLan::Simulation().Run();
 }

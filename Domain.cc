@@ -139,6 +139,7 @@ void Domain::ConfigureDataLinkLayer() {
   PointToPointHelper p2p;
   p2p.SetDeviceAttribute("DataRate", StringValue("54Mbps"));
   p2p.SetChannelAttribute("Delay", StringValue("5ms"));
+  p2p.SetDeviceAttribute("Mtu", UintegerValue(1600));
   apServerDevs_ = p2p.Install(apNodes_.Get(0), serverNodes_.Get(0));
   apServerDevs_.Add(p2p.Install(apNodes_.Get(0), serverNodes_.Get(1)));
   apServerDevs_.Add(p2p.Install(apNodes_.Get(0), serverNodes_.Get(2)));
